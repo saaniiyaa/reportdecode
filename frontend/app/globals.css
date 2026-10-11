@@ -1,9 +1,10 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ─────────────────────────────────────────────────────────────
+   DESIGN SYSTEM — The Two-Minute Doctor
+   Clinical, ultra-crisp, distraction-free
+   ───────────────────────────────────────────────────────────── */
 
 @theme inline {
   --color-background: var(--background);
@@ -12,15 +13,372 @@
   --font-mono: var(--font-geist-mono);
 }
 
+:root {
+  /* ── Neutrals ── */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-overlay: rgba(255, 255, 255, 0.92);
+  --border: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --muted: #94a3b8;
+  --muted-foreground: #64748b;
+
+  /* ── Clinical Palette ── */
+  --critical-red: #ef4444;
+  --critical-red-bg: #fef2f2;
+  --critical-red-border: #fecaca;
+  --critical-red-glow: rgba(239, 68, 68, 0.15);
+
+  --clinical-blue: #3b82f6;
+  --clinical-blue-bg: #eff6ff;
+  --clinical-blue-border: #bfdbfe;
+
+  --emerald: #10b981;
+  --emerald-bg: #ecfdf5;
+  --emerald-border: #a7f3d0;
+
+  --amber: #f59e0b;
+  --amber-bg: #fffbeb;
+  --amber-border: #fde68a;
+
+  --purple: #8b5cf6;
+  --purple-bg: #f5f3ff;
+  --purple-border: #ddd6fe;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+  --shadow-glow-red: 0 0 20px rgba(239, 68, 68, 0.2);
+  --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.15);
+
+  /* ── Typography ── */
+  --font-clinical: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-code: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ── Spacing ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* ── Timeline ── */
+  --timeline-connector: #cbd5e1;
+  --timeline-connector-active: #3b82f6;
+  --timeline-node: #e2e8f0;
+  --timeline-node-active: #3b82f6;
+}
+
+/* ── Dark Mode ── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0c1222;
+    --foreground: #e2e8f0;
+    --surface: #1e293b;
+    --surface-raised: #263348;
+    --surface-overlay: rgba(30, 41, 59, 0.95);
+    --border: #334155;
+    --border-subtle: #1e293b;
+    --muted: #64748b;
+    --muted-foreground: #94a3b8;
+    --critical-red-bg: rgba(239, 68, 68, 0.12);
+    --critical-red-border: rgba(239, 68, 68, 0.25);
+    --clinical-blue-bg: rgba(59, 130, 246, 0.12);
+    --clinical-blue-border: rgba(59, 130, 246, 0.25);
+    --emerald-bg: rgba(16, 185, 129, 0.12);
+    --emerald-border: rgba(16, 185, 129, 0.25);
+    --amber-bg: rgba(245, 158, 11, 0.12);
+    --amber-border: rgba(245, 158, 11, 0.25);
+    --purple-bg: rgba(139, 92, 246, 0.12);
+    --purple-border: rgba(139, 92, 246, 0.25);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
+    --timeline-connector: #475569;
+    --timeline-node: #475569;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE STYLES
+   ───────────────────────────────────────────────────────────── */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-clinical);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--clinical-blue);
+  color: white;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ANIMATIONS
+   ───────────────────────────────────────────────────────────── */
+
+@keyframes flash-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 var(--critical-red-glow); }
+  50% { box-shadow: 0 0 16px 4px var(--critical-red-glow); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes recording-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+@keyframes progress-stripe {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out both;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.4s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out both;
+}
+
+.animate-flash-red {
+  animation: flash-red 1.2s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+}
+
+.animate-recording {
+  animation: recording-pulse 1.5s ease-in-out infinite;
+}
+
+/* Staggered children */
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 60ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 120ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 180ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 360ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 420ms; }
+
+/* ─────────────────────────────────────────────────────────────
+   SCROLLBAR
+   ───────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted-foreground); }
+
+/* ─────────────────────────────────────────────────────────────
+   PRINT STYLES
+   ───────────────────────────────────────────────────────────── */
+
+@media print {
+  body { background: white !important; }
+  .no-print { display: none !important; }
+  .print-break { page-break-before: always; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PATIENT INTAKE — Mobile-first, large touch targets
+   ───────────────────────────────────────────────────────────── */
+
+.intake-touch-target {
+  min-height: 56px;
+  min-width: 56px;
+}
+
+.upload-zone {
+  transition: all 0.2s ease;
+}
+.upload-zone.drag-over {
+  border-color: var(--clinical-blue);
+  background: var(--clinical-blue-bg);
+  transform: scale(1.01);
+}
+
+/* Recording indicator */
+.recording-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--critical-red);
+  animation: recording-pulse 1.5s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TIMELINE
+   ───────────────────────────────────────────────────────────── */
+
+.timeline-connector {
+  position: absolute;
+  left: 19px;
+  top: 40px;
+  bottom: 0;
+  width: 2px;
+  background: var(--timeline-connector);
+}
+
+.timeline-node {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.timeline-node:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.timeline-node.active {
+  box-shadow: 0 0 0 3px var(--clinical-blue), var(--shadow-glow-blue);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RED FLAG BANNER
+   ───────────────────────────────────────────────────────────── */
+
+.red-flag-banner {
+  background: linear-gradient(135deg, #991b1b, #dc2626);
+  animation: flash-red 2.5s ease-in-out infinite;
+}
+
+.red-flag-banner.warning {
+  background: linear-gradient(135deg, #92400e, #d97706);
+  animation: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SOURCE INSPECTOR
+   ───────────────────────────────────────────────────────────── */
+
+.source-highlight {
+  position: absolute;
+  border: 2px solid var(--clinical-blue);
+  background: rgba(59, 130, 246, 0.12);
+  border-radius: 4px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.source-highlight.critical {
+  border-color: var(--critical-red);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SKELETON / LOADING
+   ───────────────────────────────────────────────────────────── */
+
+.skeleton {
+  background: linear-gradient(90deg, var(--border-subtle) 25%, var(--border) 50%, var(--border-subtle) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   KEYBOARD NAV FOCUS
+   ───────────────────────────────────────────────────────────── */
+
+.keyboard-focusable:focus-visible {
+  outline: 2px solid var(--clinical-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GLASS MORPHISM CARDS
+   ───────────────────────────────────────────────────────────── */
+
+.glass-card {
+  background: var(--surface-overlay);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PROGRESS BAR
+   ───────────────────────────────────────────────────────────── */
+
+.progress-stripe {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255,255,255,.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255,255,255,.15) 50%,
+    rgba(255,255,255,.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 40px 40px;
+  animation: progress-stripe 1s linear infinite;
 }

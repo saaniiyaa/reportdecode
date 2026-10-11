@@ -12,12 +12,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Report, Decoded - AI Lab Report Explainer",
-  description: "Turning confusing lab reports into plain-language answers families can understand.",
+export const metadata: Metadata = {
+  title: "The Two-Minute Doctor — Clinical Intake & Timeline Engine",
+  description: "Rapid pre-consultation clinical intake and chronological timeline engine for high-density OPD consultations.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="en"

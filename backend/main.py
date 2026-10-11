@@ -9,6 +9,9 @@ import io
 from PIL import Image
 from google import genai
 
+from dotenv import load_dotenv
+load_dotenv()
+
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 app = FastAPI(title="Report Decoded API")
 
